@@ -1,7 +1,6 @@
 package it.polito.tdp.bar.model;
 
-import java.time.Duration;
-import java.time.LocalTime;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -91,7 +90,7 @@ public class Simulatore {
 					this.queue.add(new Evento(e.getOraArrivo()+rand.nextInt(60)+60, TipoEvento.PARTENZA_GRUPPO_CLIENTI, e.getGruppo()));
 				}else if(this.assegnaPosto(g) == false) {
 					//guardo la tolleranza e decido se si possono accontentare
-					if(g.getTolleranza() * rand.nextFloat() >= 0.5) {//situazione in cui accettano
+					if(g.getTolleranza() > rand.nextFloat()) {//situazione in cui accettano
 						this.soddisfatti++;
 						this.queue.add(new Evento(e.getOraArrivo()+rand.nextInt(60)+60, TipoEvento.PARTENZA_GRUPPO_CLIENTI, e.getGruppo()));
 					}else {

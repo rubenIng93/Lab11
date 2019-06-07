@@ -1,16 +1,18 @@
 package it.polito.tdp.bar.model;
 
-import java.time.LocalTime;
 
 public class Gruppo {
 	
+	private int idGruppo;
 	private int numPersone;
 	private float tolleranza;
 	//private LocalTime oraArrivo;
-	private boolean haTavolo;
+	private Integer tavoloDa;
 	
-	public Gruppo(int numPersone, float tolleranza/*, LocalTime oraArrivo*/) {
+	public Gruppo(int idGruppo, int numPersone, float tolleranza/*, LocalTime oraArrivo*/) {
 		super();
+		
+		this.idGruppo = idGruppo;
 		this.numPersone = numPersone;
 		if(tolleranza > 0.9) {
 			this.tolleranza = (float) (tolleranza - 0.1);
@@ -18,7 +20,7 @@ public class Gruppo {
 			this.tolleranza = tolleranza;
 		}		
 		//this.oraArrivo = oraArrivo;
-		this.haTavolo = false;
+		this.tavoloDa = null;
 	}
 
 	public int getNumPersone() {
@@ -37,12 +39,12 @@ public class Gruppo {
 		this.oraArrivo = oraArrivo;
 	}*/
 
-	public boolean isHaTavolo() {
-		return haTavolo;
+	public Integer isHaTavolo() {
+		return tavoloDa;
 	}
 
-	public void setHaTavolo(boolean haTavolo) {
-		this.haTavolo = haTavolo;
+	public void setHaTavolo(Integer haTavolo) {
+		this.tavoloDa = haTavolo;
 	}
 
 	public void setNumPersone(int numPersone) {
@@ -55,8 +57,14 @@ public class Gruppo {
 
 	@Override
 	public String toString() {
-		return String.format("Gruppo:  %s, %s", numPersone, tolleranza);
+		return String.format("Gruppo -> idGruppo = %s, numPersone = %s, tolleranza = %s, tavoloDa = %s", idGruppo,
+				numPersone, tolleranza, tavoloDa);
 	}
+
+	
+
+	
+	
 	
 	
 	

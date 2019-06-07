@@ -44,7 +44,7 @@ public class Simulatore {
 		gruppi = new ArrayList<>();
 		
 		for(int i = 0; i < numTotClienti; i++) {
-			Gruppo inArrivo = new Gruppo(rand.nextInt(10) + 1, rand.nextFloat()/*, oraArrivo*/);
+			Gruppo inArrivo = new Gruppo(100 + i, rand.nextInt(10) + 1, rand.nextFloat()/*, oraArrivo*/);
 			gruppi.add(inArrivo);
 			
 		}
@@ -78,6 +78,8 @@ public class Simulatore {
 		while(!queue.isEmpty()) {
 			
 			Evento e = queue.poll();
+			//System.out.println(e);
+			
 			Gruppo g = e.getGruppo();
 			
 			switch(e.getTipo()) {
@@ -85,7 +87,6 @@ public class Simulatore {
 			case ARRIVO_GRUPPO_CLIENTI:
 				//Devo assegnare il tavolo in base al n persone e se ce ne sono disponibili
 				if(this.assegnaPosto(g) == true) {
-					g.setHaTavolo(true);
 					this.soddisfatti ++;
 					this.queue.add(new Evento(e.getOraArrivo()+rand.nextInt(60)+60, TipoEvento.PARTENZA_GRUPPO_CLIENTI, e.getGruppo()));
 				}else if(this.assegnaPosto(g) == false) {
@@ -101,6 +102,12 @@ public class Simulatore {
 				break;
 				
 			case PARTENZA_GRUPPO_CLIENTI:
+				//restituzione tavoli
+				Integer tavoloDa = g.isHaTavolo();
+				if(tavoloDa != null) {
+					int disponibili = this.mappaTavoliPosti.get(tavoloDa);
+					this.mappaTavoliPosti.put(tavoloDa, disponibili + 1);
+				}
 			}
 		}
 		
@@ -139,6 +146,7 @@ public class Simulatore {
 				if(this.mappaTavoliPosti.get(10) > 0) {
 					int liberi = mappaTavoliPosti.get(10);
 					mappaTavoliPosti.put(10, liberi - 1);
+					gruppo.setHaTavolo(10);
 					return true;
 				}else
 					return false;
@@ -146,11 +154,13 @@ public class Simulatore {
 				if(this.mappaTavoliPosti.get(8) > 0) {
 					int liberi = mappaTavoliPosti.get(8);
 					mappaTavoliPosti.put(8, liberi - 1);
+					gruppo.setHaTavolo(8);
 					return true;
 				}else {
 					if(this.mappaTavoliPosti.get(10) > 0) {
 						int liberi = mappaTavoliPosti.get(10);
 						mappaTavoliPosti.put(10, liberi - 1);
+						gruppo.setHaTavolo(10);
 						return true;
 					}else
 						return false;
@@ -159,14 +169,17 @@ public class Simulatore {
 				if(this.mappaTavoliPosti.get(6) > 0) {
 					int liberi = mappaTavoliPosti.get(6);
 					mappaTavoliPosti.put(6, liberi - 1);
+					gruppo.setHaTavolo(6);
 					return true;
 				}else if(this.mappaTavoliPosti.get(8) > 0) {
 					int liberi = mappaTavoliPosti.get(8);
 					mappaTavoliPosti.put(8, liberi - 1);
+					gruppo.setHaTavolo(8);
 					return true;
 				}else if(this.mappaTavoliPosti.get(10) > 0) {
 					int liberi = mappaTavoliPosti.get(10);
 					mappaTavoliPosti.put(10, liberi - 1);
+					gruppo.setHaTavolo(10);
 					return true;
 				}else
 					return false;
@@ -174,14 +187,17 @@ public class Simulatore {
 				if(this.mappaTavoliPosti.get(4) > 0) {
 					int liberi = mappaTavoliPosti.get(4);
 					mappaTavoliPosti.put(4, liberi - 1);
+					gruppo.setHaTavolo(4);
 					return true;
 				}else if((this.mappaTavoliPosti.get(6) > 0) && persone != 2) {
 					int liberi = mappaTavoliPosti.get(6);
 					mappaTavoliPosti.put(6, liberi - 1);
+					gruppo.setHaTavolo(6);
 					return true;
 				}else if(persone == 4 && this.mappaTavoliPosti.get(8) > 0) {
 					int liberi = mappaTavoliPosti.get(8);
 					mappaTavoliPosti.put(8, liberi - 1);
+					gruppo.setHaTavolo(8);
 					return true;
 				}
 			}
